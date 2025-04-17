@@ -1,11 +1,13 @@
 
 # In[1]:
-##import libraries 
+##import libraries (basic packages)
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import statsmodels 
+
+##import libraries (ML packages)
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score, StratifiedKFold
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
@@ -15,6 +17,7 @@ from sklearn.impute import SimpleImputer
 
 # In[2]:
 ##Importing dataset
+##WE WILL NEED TO DISCUSS WITH SHEENA HOW TO SET YOUR DIRECTORY TO PNU WOLFSON WITHIN THE PYTHON ENVIRONMENT
 data = 'C:/datasets/adni_data.csv'
 df = pd.read_csv(data)
 
@@ -35,6 +38,9 @@ df.dtypes        # Just data types
 df.isnull().sum()        # Total missing per column
 df.isnull().mean()*100   # % of missing per column
 df[df.isnull().any(axis=1)]  # Rows with missing values
+
+##BASED ON THESE VALUES WE WILL DETERMINE WHETHER ANY FURTHER ACTION IS REQUIRED (e.g. dropping rows with NaN)
+
 
 
 # In[5]:
