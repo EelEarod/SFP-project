@@ -35,6 +35,8 @@ df = pd.read_csv(data)
 #NEUROEXM Data: 3748 screening cases vs. 289 baseline cases (some of these missing additional data)
 #VITALS Data: 2806 screening cases vs. 2722 baseline cases (many missing height data - coded as -4)
 
+#Original variables
+
 #Identifier variable: Across all datasets
 #RID (Participant roster ID)
 
@@ -57,15 +59,74 @@ df = pd.read_csv(data)
 #PXOTHER (13. Other; 1=Normal, 2=Abnormal)
 
 #Clinical variables: NEUROEXM
-#NEUROEXM (1. General Appearance; 1=Normal, 2=Abnormal)
+#NXVISUAL (1. Significant Visual Impairment; 1=Absent; 2=Present)
+#NXAUDITO (2. Significant Auditory Impairment; 1=Absent; 2=Present)
+#NXTREMOR (3. Tremor; 1=Absent; 2=Present)
+#NXCONSCI (4. Level of Consciousness; 1=Absent; 2=Present)
+#NXNERVE (5. Cranial Nerves; 1=Absent; 2=Present)
+#NXMOTOR (6. Motor Strength; 1=Absent; 2=Present)
+#NXFINGER (7a. Cerebellar - Finger to Nose; 1=Absent; 2=Present)
+#NXHEEL (7b. Cerebellar - Heel to Shin; 1=Absent; 2=Present)
+#NXSENSOR (8. Sensory; 1=Absent; 2=Present)
+#NXTENDON (9. Deep Tendon Reflexes; 1=Absent; 2=Present)
+#NXPLANTA (10. Plantar Reflexes; 1=Absent; 2=Present)
+#NXGAIT (11. Gait; 1=Absent; 2=Present)
+#NXOTHER (12. Other; 1=Absent; 2=Present)
+
+#Clinical variables: VITALS
+#VSWEIGHT (1a. Weight; Numeric) #VSWTUNIT (1b. Weight Units; 1=pounds; 2=kilograms)
+#VSHEIGHT (2a. Height; Numeric) #VSHTUNIT (2b. Height Units; 1=inches; 2=centimeters)
+#VSBPSYS (3a. Systolic  BP- mmHg; range: 76-250)
+#VSBPDIA (3b. Diastolic  BP- mmHg; range: 36-130)
+#VSPULSE (4. Seated Pulse Rate (per minute); range: 40-130)
+#VSRESP (5. Respirations (per minute); range: 6-40)
+#VSTEMP (6a. Temperature; range: 6-40) #VSTMPSRC (6b. Temperature Source; 1=Oral, 2=Tympanic, 3=Other); VSTMPUNT (6c. Temperature Units, 1=Fahrenheit; 2=Celsius)
+
+#Need code to seperately extaract the baseline data from the ADNIMERGE file
+#Afterwards merge with the screening clinical data based only on RID 
+
+#Demographic and diagnostic variables at baseline: ADNIMERGE
+#EXAMDATE (Baseline examination date)
+#SITE (ADNI exam site)
+#DX_bl (Baseline diagnosis; AD=Alzheimer's disease; CN=cognitively normal; EMCI=early MCI; LMCI=late MCI; SMC=subjective memory concern)
+#AGE (Baseline age)
+#PTGENDER (Gender)
+#PTEDUCAT (Education)
+#PTRACCAT (Race)
+#APOE4 (APOE e4 carrier status; 0=non-carrier; 1=heterozygous carrier; 2=homozygous carrier)
 
 
 
+#VARIABLES TO CALCULATE - DORAE TO ATTEMPT AND LAUREN TO ADVISE HERE
 
+#Rename baseline and screening exam dates (prior to the merge) - for later calculations 
 
+#Age at screening visit; will need to calculate the difference between the screening and baseline visit dates and subtract this from the baseline age
 
-#Covariates
-#Age at screening visit
+#BMI. Will need to standardise height and weight to common united (e.g. kg and cm), use the formula to calculate BMI afterwards. 
+VSWEIGHT=float(input())
+VSHEIGHT=float(input())
+bmi = VSWEIGHT/(VSHEIGHT)**2
+if bmi<18.5:
+    print("Underweight")
+elif bmi>=18.5 and bmi<25:
+    print("Normal")
+elif bmi>=25 and bmi<30:
+    print("Overweight")
+else:
+    print("Obesity")
+
+#MAP. Use the code to calculate MAP (mean arterial pressure based on systolic and diastolic readings):
+VSBPSYS=float(input))
+VSBPDIA=float(input))
+MAP = (VSBPSYS + 2(VSBPDIA))/3
+
+#Temperature. Need to standardise temperature to either farenheit or celsius. 
+#We can choose to create seperate variables for temperature based on oral or tympanic sources for sensitivity analyses if temp generally is significant.
+
+#Total scores for neuro and physical exams (e.g. adding up number of abnormal domains across measures)
+
+#Diagnostic categories; combine MCI groups into one and combine SMC and CN into 1 controls category
 
 
 
