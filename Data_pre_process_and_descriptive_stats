@@ -1,0 +1,30 @@
+
+
+# In[1]:
+
+#import libraries 
+import pandas as pd
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score, StratifiedKFold
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
+
+# In[2]:
+
+#Importing dataset
+
+data = 'C:/datasets/adni_data.csv'
+
+df = pd.read_csv(data)
+
+#Load the datasets 
+adni_data = pd.read_csv('ADNIDATA.CVS')
+
+#Preview dataset
+df.head()
+
+# In[3]:
+
