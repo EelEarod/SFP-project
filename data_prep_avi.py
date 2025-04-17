@@ -161,9 +161,26 @@ df.isnull().sum()        # Total missing per column
 df.isnull().mean()*100   # % of missing per column
 df[df.isnull().any(axis=1)]  # Rows with missing values
 
+
 #AS A TEAM WE CAN MEET TO DISCUSS ISSUES SURROUNDING THE MISSINGNESS OF DATA AND WHETHER FURTHER ACTION IS REQUIRED TO CORRECT
 #PURSUANT CODE FOR MISSING DATA/IMPUTATION/DROPPING TO BE DETERMINED AFTER THIS EXPLORATION
 
+#Count the number of entries per participant (RID) - should just be 1 each
+dara['RID'].value_counts()
+
+## Summarise Numeric Data
+df.describe()     # count, mean, std, min, max, quartiles
+
+## Check Unique Values & Frequencies
+df['col'].value_counts()        # Count of each value
+df['col'].nunique()             # Number of unique values
+
+#THIS STEP SHOULD BE HELPFUL IN DETERMINING THE BREAKDOWN OF ABNORMAL VS NORMAL OR ABSENT VS PRESENT VALUES ON THE NEURO AND PHYSICAL EXAM
+#THIS STEP WILL ALSO BE HELPFUL IN A PRELIMINARY IDENTIFICATION OF CODED MISSING VALUES (E.G -4) AND EXTREME OUTLIERS FOR YOUR NUMERIC VARIABLES
+#THIS STEP SHOULD ALSO GIVE YOU MOST OF THE INFORMATION THAT YOU NEED ON YOUR BASELINE DEMOGRAPHIC/DIAGNOSITC BREAKDOWN OF THE SAMPLE (USUALLY TABLE 1 IN THE PAPER)
+
+#FINALLY WE NEED HISTOGRAMS FOR THE DISTRIBUTION OF THE NUMERIC (NON-CATEGORICAL DATA) VARIABLES - CLINICAL AND COVARIATES
+#WE ALSO NEED A METHOD TO DETECT OUTLIERS - DORAE PLEASE ATTEMPT TO WRITE SOME CODE FOR BOXPLOTS TO DO SO AND LAUREN TO SUPPORT
 
 
 
@@ -174,26 +191,3 @@ df[df.isnull().any(axis=1)]  # Rows with missing values
 
 
 
-
-
-
-
-
-
-
-
-
-# In[3]:
-
-##Preview dataset
-df.head()        # First 5 rows
-df.tail()        # Last 5 rows
-df.sample(5)     # Random 5 rows
-
-# In[4]:
-
-##find missing data
-
-df.isnull().sum()        # Total missing per column
-df.isnull().mean()*100   # % of missing per column
-df[df.isnull().any(axis=1)]  # Rows with missing values
