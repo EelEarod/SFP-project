@@ -97,11 +97,27 @@ df = pd.read_csv(data)
 
 
 
-#VARIABLES TO CALCULATE - DORAE TO ATTEMPT AND LAUREN TO ADVISE HERE
+#TRANSFORMATIONS ON EXISTING VARIABLES- DORAE TO ATTEMPT AND LAUREN TO ADVISE HERE
+
+#Convert categorical variables (numeric) into factors - this is the majority of our clinical variables and our demographic/diagnostic variables
+
+#Ensure numeric variables are classified as numeric and not another category (e.g. string)
+
+#Ensure missing values are coded properly (for example may be -4 for some of the height values where the data not collected properly)
+
+
+
+
+
+
+#NEW VARIABLES TO CALCULATE - DORAE TO ATTEMPT AND LAUREN TO ADVISE HERE
 
 #Rename baseline and screening exam dates (prior to the merge) - for later calculations 
 
-#Age at screening visit; will need to calculate the difference between the screening and baseline visit dates and subtract this from the baseline age
+#Age at screening visit; will need to calculate the difference between the screening and baseline visit dates (keep this variable for a potential covariate in sensitivity analysis)
+#and subtract this from the baseline age to get your screening age
+
+#Calculate an age squared variable for the screening visit value
 
 #BMI. Will need to standardise height and weight to common united (e.g. kg and cm), use the formula to calculate BMI afterwards. 
 VSWEIGHT=float(input())
@@ -122,17 +138,31 @@ VSBPDIA=float(input))
 MAP = (VSBPSYS + 2(VSBPDIA))/3
 
 #Temperature. Need to standardise temperature to either farenheit or celsius. 
-#We can choose to create seperate variables for temperature based on oral or tympanic sources for sensitivity analyses if temp generally is significant.
+#We can choose to create seperate variables for temperature based on oral or tympanic or other sources for sensitivity analyses if temp generally is significant.
 
 #Total scores for neuro and physical exams (e.g. adding up number of abnormal domains across measures)
 
 #Diagnostic categories; combine MCI groups into one and combine SMC and CN into 1 controls category
 
 
+#Data exploration (overall data set)
 
+##Preview dataset
+df.head()        # First 5 rows
+df.tail()        # Last 5 rows
+df.sample(5)     # Random 5 rows
+##check data shape and info
+df.shape         # (rows, columns)
+df.columns       # Column names
+df.info()        # Data types & non-null counts
+df.dtypes        # Just data types
+##find missing data
+df.isnull().sum()        # Total missing per column
+df.isnull().mean()*100   # % of missing per column
+df[df.isnull().any(axis=1)]  # Rows with missing values
 
-
-
+#AS A TEAM WE CAN MEET TO DISCUSS ISSUES SURROUNDING THE MISSINGNESS OF DATA AND WHETHER FURTHER ACTION IS REQUIRED TO CORRECT
+#PURSUANT CODE FOR MISSING DATA/IMPUTATION/DROPPING TO BE DETERMINED AFTER THIS EXPLORATION
 
 
 
