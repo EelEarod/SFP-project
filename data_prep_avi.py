@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# ## Data pre_processing script (section 5.1 and 5.2)
+# ## Data pre_processing script
 
 # In[1]:
 
@@ -28,7 +28,30 @@ df = pd.read_csv(data)
 
 # In[3]:
 
-#We will need code here for extracting our clinical variables for the 
+#We will need code here for extracting the data from our clinical variables from the screening visit (VISCODE2='sc'). 
+
+#Justification
+
+#PHYSICAL Data: 3746 screening cases vs. 289 baseline cases (some of these missing additional data)
+#NEUROEXM Data: 3748 screening cases vs. 289 baseline cases (some of these missing additional data)
+#VITALS Data: 2806 screening cases vs. 2722 baseline cases (many missing height data)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
