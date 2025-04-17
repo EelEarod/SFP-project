@@ -1,10 +1,11 @@
 
-
 # In[1]:
-
-#import libraries 
+##import libraries 
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import statsmodels 
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score, StratifiedKFold
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
@@ -13,18 +14,72 @@ from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 
 # In[2]:
-
-#Importing dataset
-
+##Importing dataset
 data = 'C:/datasets/adni_data.csv'
-
 df = pd.read_csv(data)
 
-#Load the datasets 
-adni_data = pd.read_csv('ADNIDATA.CVS')
-
-#Preview dataset
-df.head()
+##Preview dataset
+df.head()        # First 5 rows
+df.tail()        # Last 5 rows
+df.sample(5)     # Random 5 rows
 
 # In[3]:
+##check data shape and info
+
+df.shape         # (rows, columns)
+df.columns       # Column names
+df.info()        # Data types & non-null counts
+df.dtypes        # Just data types
+
+# In[4]:
+##find missing data
+
+df.isnull().sum()        # Total missing per column
+df.isnull().mean()*100   # % of missing per column
+df[df.isnull().any(axis=1)]  # Rows with missing values
+
+# In[5]:
+## Summarise Numeric Data
+df.describe()     # count, mean, std, min, max, quartiles
+
+##distribution of data - baseline characteristics 
+#histogram 
+
+
+# In[7]:
+#Understand the visit index count (screening/bl)
+data['VISCODE'].value_counts()
+
+#Count the number of entries per participant (RID)
+dara['RID'].value_counts()
+
+#Include only adni baseline visits 
+#step 1: filter entries with VISCODE sc
+adni = adni[adni['VISCODE']== 'sc' ]
+
+#Display the data for a specific participan ID
+specific_participant_ID = RID12345
+print(adni[adni['RID']== specific_participant_ID])
+
+
+# In[8]:
+## BMI
+VSWEIGHT=float(input())
+VSHEIGHT=float(input())
+bmi= VSWEIGHT/(VSHEIGHT)**2
+
+if bmi<18.5:
+    print("Underweight")
+elif bmi>=18.5 and bmi<25:
+    print("Normal")
+elif bmi>=25 and bmi<30:
+    print("Overweight")
+else:
+    print("Obesity")
+
+## MAP
+
+
+
+
 
