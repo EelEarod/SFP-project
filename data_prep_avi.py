@@ -83,7 +83,7 @@ df = pd.read_csv(data)
 #VSTEMP (6a. Temperature; range: 6-40) #VSTMPSRC (6b. Temperature Source; 1=Oral, 2=Tympanic, 3=Other); VSTMPUNT (6c. Temperature Units, 1=Fahrenheit; 2=Celsius)
 
 #Need code to seperately extaract the baseline data from the ADNIMERGE file
-#Afterwards merge with the screening clinical data based only on RID 
+#Afterwards merge with the screening clinical data based only on RID - we will only have 1 timepoint so no need to explore visit breakdown
 
 #Demographic and diagnostic variables at baseline: ADNIMERGE
 #EXAMDATE (Baseline examination date)
