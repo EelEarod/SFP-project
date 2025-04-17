@@ -25,7 +25,6 @@ df.sample(5)     # Random 5 rows
 
 # In[3]:
 ##check data shape and info
-
 df.shape         # (rows, columns)
 df.columns       # Column names
 df.info()        # Data types & non-null counts
@@ -33,20 +32,12 @@ df.dtypes        # Just data types
 
 # In[4]:
 ##find missing data
-
 df.isnull().sum()        # Total missing per column
 df.isnull().mean()*100   # % of missing per column
 df[df.isnull().any(axis=1)]  # Rows with missing values
 
+
 # In[5]:
-## Summarise Numeric Data
-df.describe()     # count, mean, std, min, max, quartiles
-
-##distribution of data - baseline characteristics 
-#histogram 
-
-
-# In[7]:
 #Understand the visit index count (screening/bl)
 data['VISCODE'].value_counts()
 
@@ -62,11 +53,32 @@ specific_participant_ID = RID12345
 print(adni[adni['RID']== specific_participant_ID])
 
 
+# In[6]:
+## Summarise Numeric Data
+df.describe()     # count, mean, std, min, max, quartiles
+
+
+# In[7]
+##distribution of data - baseline characteristics / identify outliers 
+#histogram 
+#box plot 
+
+
+#turning categorical variables into factors/numerical
+
+
+
+
 # In[8]:
+##physical examination domains
+
+##Total number of abnormal neurological examination domains 
+
+
 ## BMI
 VSWEIGHT=float(input())
 VSHEIGHT=float(input())
-bmi= VSWEIGHT/(VSHEIGHT)**2
+bmi = VSWEIGHT/(VSHEIGHT)**2
 
 if bmi<18.5:
     print("Underweight")
@@ -78,7 +90,9 @@ else:
     print("Obesity")
 
 ## MAP
-
+VSBPSYS=float(input))
+VSBPDIA=float(input))
+MAP = (VSBPSYS + 2(VSBPDIA))/3
 
 
 
