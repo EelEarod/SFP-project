@@ -133,22 +133,34 @@ print(outliers)
 
 # In[8]
 #turning categorical variables into factors/numerical using import pandas as pd
-e.g. Gender
+PTGENDER, PTEDUCAT, PTETHCAT, PTRACCAT, PTMARRY, APOE4
 
 # Sample DataFrame
 df = pd.DataFrame({
-    'Gender': ['Male', 'Female', 'Female', 'Male', 'Other']
+    'PTGENDER': ['Male', 'Female', 'Female', 'Male', 'Other']
 })
 # Convert to category codes
-df['Gender_encoded'] = df['Gender'].astype('category').cat.codes
+df['Gender_encoded'] = df['PTGENDER].astype('category').cat.codes
 print(df)
 
 
 # In[9]:
-##physical examination domains
+#Total scores for neuro and physical exams (e.g. adding up number of abnormal domains across measures)
+
+##physical examination domains (1= normal, 2=abnormal) --> ?change to 0=normal, 1=abnormal 
+#Abdomen #Back #Chest #Oedema #Extremeties #General appearance #Head, Eyes, ENT #Heart #MSK #Neck #Other #Peripheral vascular #Skin and Appendages 
+
+df = pd.read_csv("adni_physical_examination_domains") 
+# Calculate total sum of scores
+total_score = df['normal/abnormal'].sum()
+print("Total Score:", total_score)
 
 ##Total number of abnormal neurological examination domains 
-
+# Load the CSV
+df = pd.read_csv("adni_neurological_examination_domains") #change file name 
+# Calculate total sum of scores
+total_score = df['normal/abnormal'].sum()
+print("Total Score:", total_score)
 
 # In[10]:
 #Making new variables based on existing ones
@@ -177,7 +189,6 @@ MAP = (VSBPSYS + 2(VSBPDIA))/3
 #create seperate variables for temperature based on oral or tympanic or other sources for sensitivity analyses if temp generally is significant.
 
 
-#Total scores for neuro and physical exams (e.g. adding up number of abnormal domains across measures)
 #Diagnostic categories; combine MCI groups into one and combine SMC and CN into 1 controls category
 
 
