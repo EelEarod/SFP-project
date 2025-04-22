@@ -80,7 +80,7 @@ df.describe()     # count, mean, std, min, max, quartiles
 #box plot 
 
 #Histograms for numeric variable distributions - using matplotlib.pylot as plt
-e.g. age 
+AGE, WEIGHT, HEIGHT, BMI, BP, HR, RR, TEMP, TOTAL NE SCORE, TOTAL PE SCORE 
 # Example data
 data = [12, 15, 13, 17, 21, 22, 25, 30, 30, 35]
 
