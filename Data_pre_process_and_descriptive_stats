@@ -114,9 +114,22 @@ plt.show()
 
 
 #Outlier detection methods for numeric variables
+##Using box plot (Visual Detection)
+##Using IQR (Interquartile Range) – Most common method
 
-
-
+# example data 
+data = pd.DataFrame({'Age': [10, 12, 14, 16, 15, 13, 90, 11, 12, 14]})
+# Calculate Q1 and Q3
+Q1 = data['Age'].quantile(0.25)
+Q3 = data['Age'].quantile(0.75)
+IQR = Q3 - Q1
+# Define bounds
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+# Find outliers
+outliers = data[(data['Age'] < lower_bound) | (data['Age'] > upper_bound)]
+print("IQR Outliers:")
+print(outliers)
 
 # In[8]
 #turning categorical variables into factors/numerical using import pandas as pd
@@ -168,8 +181,7 @@ MAP = (VSBPSYS + 2(VSBPDIA))/3
 #Diagnostic categories; combine MCI groups into one and combine SMC and CN into 1 controls category
 
 
-# In[11]:
-# Variable transformations from categorical into numerical/factors
+
 
 
 
