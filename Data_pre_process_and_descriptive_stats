@@ -15,6 +15,8 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 
+
+
 # In[2]:
 ##Importing dataset
 ##WE WILL NEED TO DISCUSS WITH SHEENA HOW TO SET YOUR DIRECTORY TO PNU WOLFSON WITHIN THE PYTHON ENVIRONMENT
@@ -26,12 +28,16 @@ df.head()        # First 5 rows
 df.tail()        # Last 5 rows
 df.sample(5)     # Random 5 rows
 
+
+
 # In[3]:
 ##check data shape and info
 df.shape         # (rows, columns)
 df.columns       # Column names
 df.info()        # Data types & non-null counts
 df.dtypes        # Just data types
+
+
 
 # In[4]:
 ##find missing data
@@ -43,8 +49,9 @@ df[df.isnull().any(axis=1)]  # Rows with missing values
 
 
 
+
 # In[5]:
-#Understand the visit index count (screening/bl)
+#Understand the visit index count (screening vs bl)
 data['VISCODE'].value_counts()
 
 #Count the number of entries per participant (RID)
@@ -59,9 +66,12 @@ specific_participant_ID = RID12345
 print(adni[adni['RID']== specific_participant_ID])
 
 
+
 # In[6]:
 ## Summarise Numeric Data
 df.describe()     # count, mean, std, min, max, quartiles
+
+
 
 
 # In[7]
@@ -69,18 +79,66 @@ df.describe()     # count, mean, std, min, max, quartiles
 #histogram 
 #box plot 
 
+#Histograms for numeric variable distributions - using matplotlib.pylot as plt
+e.g. age 
+# Example data
+data = [12, 15, 13, 17, 21, 22, 25, 30, 30, 35]
 
-#turning categorical variables into factors/numerical
+# Create histogram 
+plt.hist(data, bins=5, color='skyblue', edgecolor='black')
+plt.title('Histogram with Matplotlib')
+plt.xlabel('Value')
+plt.ylabel('Frequency')
+plt.show()
+
+#Histogram using - import seaborn as sns - matplotlib.pyplot as plt
+# Create histogram
+sns.histplot(data, bins=5, kde=True, color='purple')
+plt.title('Histogram with Seaborn')
+plt.xlabel('Value')
+plt.ylabel('Count')
+plt.show()
+#add a smooth curve showing the data distribution
+kde=True 
+
+
+#box plot - using matplotlib.pyplot as plt
+
+# Example data
+data = [10, 15, 14, 18, 22, 25, 30, 35, 40, 60]
+# Create box plot
+plt.boxplot(data)
+plt.title('Box Plot of Numerical Variable')
+plt.ylabel('Value')
+plt.show()
+
+
+#Outlier detection methods for numeric variables
 
 
 
 
-# In[8]:
+# In[8]
+#turning categorical variables into factors/numerical using import pandas as pd
+e.g. Gender
+
+# Sample DataFrame
+df = pd.DataFrame({
+    'Gender': ['Male', 'Female', 'Female', 'Male', 'Other']
+})
+# Convert to category codes
+df['Gender_encoded'] = df['Gender'].astype('category').cat.codes
+print(df)
+
+
+# In[9]:
 ##physical examination domains
 
 ##Total number of abnormal neurological examination domains 
 
 
+# In[10]:
+#Making new variables based on existing ones
 ## BMI
 VSWEIGHT=float(input())
 VSHEIGHT=float(input())
@@ -99,6 +157,20 @@ else:
 VSBPSYS=float(input))
 VSBPDIA=float(input))
 MAP = (VSBPSYS + 2(VSBPDIA))/3
+
+#Temperature
+#standardise temperature - celsius. 
+
+#create seperate variables for temperature based on oral or tympanic or other sources for sensitivity analyses if temp generally is significant.
+
+
+#Total scores for neuro and physical exams (e.g. adding up number of abnormal domains across measures)
+#Diagnostic categories; combine MCI groups into one and combine SMC and CN into 1 controls category
+
+
+# In[11]:
+# Variable transformations from categorical into numerical/factors
+
 
 
 
