@@ -1,16 +1,16 @@
 #To be done within terminal:
-
-#Set directory to Wolfson PNU - Dorae's folder Sheena to advise on this step and to provide exact location of the data
-
+#Set directory to Wolfson PNU - Dorae's folder SHEENA to advise on this step and to provide exact location of the data
 #Now to create and activate environment to set the versions of python/packages.
-#I am 99% sure that this needs to be done via the terminal. Sheena/Sara to further advise on this.
+#I am 99% sure that this needs to be done via the terminal. SHEENA/SARA to further advise on this.
 
-#Create the environment from the myenv.yml file (decide whether yml file should be saved in Dorae's home or Wolfson PNU directory - a draft version is in the github). Sheena/Sara to further advise on this.
+#Create the environment from the myenv.yml file (decide whether yml file should be saved in Dorae's home or Wolfson PNU directory - a draft version is in the github). SHEENA/SARA to further advise on this.
 conda env create -f myenv.yml
 
 #Activate the new environment
 conda activate myenv
 
+#Verify that the new environment was installed correctly
+conda env list
 
 # In[1]:
 ##import libraries (basic packages)
@@ -29,17 +29,37 @@ from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 
 # In[2]:
-
-##Importing dataset
-##WE WILL NEED TO DISCUSS WITH SHEENA HOW TO SET YOUR DIRECTORY TO PNU WOLFSON WITHIN THE PYTHON ENVIRONMENT
-data = 'C:/datasets/adni_data.csv'
-df = pd.read_csv(data)
+##Importing dataset. Obtain exact location of data from SHEENA. Or one data uploaded change your directory in the Apocrita interface. 
+data = 'C:/datasets/adni_data.csv' #this is incorrect. Fix with correct path
+adni = pd.read_csv(adni)
 
 # In[3]:
-#Extract the data for clinical variables from screening visit (VISCODE2 = 'sc')
-#Include only adni screening visits 
-#step 1: filter entries with VISCODE sc
-adni = adni[adni['VISCODE']== 'sc' ]
+#To begin creating our clinical dataset (vars of interest) we will filter our main dataset by subjects with only screening visits
+adni_sc = adni[adni['VISCODE2']== 'sc']
+
+#Ensure there are no duplicate IDs
+#Select duplicate rows except first occurance based on RID (ADNI ID variable)
+duplicate = adni_sc[adni_sc.duplicated(subset=['RID'])]
+print("Duplicate Rows Based on RID :")
+#Print the resultant dataframe
+duplicate
+#If duplicates found, consult collaboratory team to advise on removal of datapoints
+
+#from screening dataset, select all relevant ID, exam_dates and clinical variables. Need to consult with SHEENA on new variable names. 
+#EXAMDATE can be any from the screening visit (Neuro, Phys, or Vitals) - ideally these should be on the same date/close enough in time to count as one timepoint
+adni_sc_clin = adni_sc[["RID", "VISCODE2", "EXAMDATE", 
+                        "PXGENAPP", "PXHEADEY", "PXNECK", "PXCHEST", "PXHEART", "PXABDOM", "PXEXTREM", "PXEDEMA", "PXPERIPH", "PXSKIN", "PXMUSCUL", "PXBACK", "PXOTHER"
+                        
+                        
+                        EXAMDATE]]
+
+
+
+
+
+
+
+
 
 #clinical variables: physical examination (1=normal, 2= abnormal)
 #PXGENAPP (1. General Appearance)
@@ -95,6 +115,18 @@ adni = adni[adni['VISCODE']== 'sc' ]
 #PTEDUCAT (Education)
 #PTRACCAT (Race)
 #APOE4 (APOE e4 carrier status; 0=non-carrier; 1=heterozygous carrier; 2=homozygous carrier)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
