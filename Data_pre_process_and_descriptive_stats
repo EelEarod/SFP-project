@@ -201,8 +201,6 @@ def calculate_map(systolic, diastolic):
 #Temperature
 #standardise temperature - celsius. 
 
-#create seperate variables for temperature based on oral or tympanic or other sources for sensitivity analyses if temp generally is significant.
-
 #Diagnostic categories; combine MCI groups into one and combine SMC and CN into 1 controls category
 
 
