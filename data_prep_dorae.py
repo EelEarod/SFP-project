@@ -103,7 +103,7 @@ adni_sc_clin_v2['VSHEIGHT'] = adni_sc_clin_v2.apply(lambda row: inches_to_cm(row
 #calculate BMI
 BMI = adni_sc_clin_v2['VSWEIGHT'] / (adni_sc_clin_v2['VSHEIGHT']/100)**2 
 
-#Create BMI category and name. LAUREN TO DOUBLE CHECK THIS CODE.
+#Create BMI category and name. LAUREN TO DOUBLECHECK THIS CODE.
 adni_sc_clin_v2['BMI_CATEGORY']= if bmi<18.5:
                              print("Underweight")
                             elif bmi>=18.5 and bmi<25:
@@ -115,7 +115,7 @@ adni_sc_clin_v2['BMI_CATEGORY']= if bmi<18.5:
 
 adni_sc_clin_v2['BMI_CATEGORY'] = adni_sc_clin_v2['BMI_CATEGORY'].astype('category')
 
-#Calculate MAP
+#Calculate MAP. LAUREN TO DOUBLECHECK THIS CODE.
 MAP = (adni_sc_clin_v2['VSBPSYS'] + 2(adni_sc_clin_v2['VSBPDIA']))/3
 
 
