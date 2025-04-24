@@ -46,7 +46,7 @@ duplicate
 #If duplicates found, consult collaboratory team to advise on removal of datapoints
 
 #VIS DATE DATAFRAME
-  #Extract the RID, and the different VisDates. 
+  #Extract the RID, and the different VisDates. Need to consult SHEENA about whether there are seperate VISDATES in the master dataset for Neuro, Phys, and Vitals. 
   #-	Here we want a vis date screening variable
   #Combine all vis dates into a table linked by the P ID. 
     # If 3 = then create a df -  
