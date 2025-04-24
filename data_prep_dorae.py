@@ -84,11 +84,21 @@ adni_sc_clin_v2.describe()
 #calculating BMI
 #Variables to use:
 #VSWEIGHT (1a. Weight; Numeric) #VSWTUNIT (1b. Weight Units; 1=pounds; 2=kilograms)
-#VSHEIGHT (2a. Height; Numeric) #VSHTUNIT (2b. Height Units; 1=inches; 2=centimeters)
 
 #the first step is to convert pounds to kilograms 
-if VSWTUNIT 
 
+#VSHEIGHT (2a. Height; Numeric) #VSHTUNIT (2b. Height Units; 1=inches; 2=centimeters)
+
+# Conversion functions
+def pounds_to_kg(pounds):
+    return pounds * 0.45359237
+
+def inches_to_cm(inches):
+    return inches * 2.54
+
+# Apply conversions conditionally
+adni_sc_clin_v2['VSWEIGHT'] = adni_sc_clin_v2.apply(lambda row: pounds_to_kg(row['VSWEIGHT']) if row['VSWTUNIT'] == 1 else row['VSWEIGHT'], axis=1)
+adni_sc_clin_v2['VSHEIGHT'] = adni_sc_clin_v2.apply(lambda row: inches_to_cm(row['VSHEIGHT']) if row['VSHTUNIT'] == 1 else row['VSHEIGHT'], axis=1)
 
 #create a VSWEIGHT variable with just kg
 
