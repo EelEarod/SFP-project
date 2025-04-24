@@ -53,13 +53,22 @@ adni_sc_clin = adni_sc[["RID", "VISCODE2", "EXAMDATE",
                         "VSWEIGHT", "VSWTUNIT", "VSHEIGHT", "VSHTUNIT", "VSBPSYS", "VSBPDIA", "VSPULSE", "VSRESP", "VSTEMP", "VSTMPSRC", "VSTMPUNT"]]
 
 #Convert categorical variables into factors
-  categorical_vars = [
+categorical_vars = [
       "PXGENAPP", "PXHEADEY", "PXNECK", "PXCHEST", "PXHEART", "PXABDOM", "PXEXTREM", "PXEDEMA", "PXPERIPH", "PXSKIN", "PXMUSCUL", "PXBACK", "PXOTHER",
                         "NXVISUAL", "NXAUDITO", "NXTREMOR", "NXCONSCI", "NXNERVE", "NXMOTOR", "NXFINGER", "NXHEEL", "NXSENSOR", "NXTENDON", "NXPLANTA", "NXGAIT", "NXOTHER",
-                        "VSWEIGHT", "VSWTUNIT", "VSHEIGHT", "VSHTUNIT", "VSBPSYS", "VSBPDIA", "VSPULSE", "VSRESP", "VSTEMP", "VSTMPSRC", "VSTMPUNT"
+                        "VSWTUNIT", "VSHTUNIT", "VSTMPSRC", "VSTMPUNT"]]
 
-#Convert numeric variables into numerics
+for col in categorical_vars:
+      combined_df[col] = combined_df[col].astype('category')
 
+# Make sure numeric values are treated as numbers
+
+  numeric_vars = ['VSWEIGHT', 'VSHEIGHT', 'VSBPSYS', 'VSBPDIA', 'VSPULSE', 'VSRESP', 'VSTEMP']
+  for col in numeric_vars:
+      combined_df[col] = pd.to_numeric(combined_df[col], errors='coerce')
+  
+  # Fix values coded incorrectly as -4 (missing data)
+  combined_df['VSHEIGHT'] = combined_df['VSHEIGHT'].replace(-4, np.nan)
 
 
 
