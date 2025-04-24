@@ -81,6 +81,49 @@ for col in categorical_vars:
 # Descriptive stats
 adni_sc_clin_v2.describe()
 
+#calculating BMI
+#Variables to use:
+#VSWEIGHT (1a. Weight; Numeric) #VSWTUNIT (1b. Weight Units; 1=pounds; 2=kilograms)
+#VSHEIGHT (2a. Height; Numeric) #VSHTUNIT (2b. Height Units; 1=inches; 2=centimeters)
+
+#the first step is to convert pounds to kilograms 
+if VSWTUNIT 
+
+
+#create a VSWEIGHT variable with just kg
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # In[4] #TRANSFORMATIONS ON EXISTING VARIABLES- DORAE TO ATTEMPT AND LAUREN TO ADVISE HERE
 #Convert categorical variables (numeric) into factors - this is the majority of our clinical variables and our demographic/diagnostic variables
 
