@@ -89,7 +89,7 @@ adni_sc_clin_v2.describe()
 
 #VSHEIGHT (2a. Height; Numeric) #VSHTUNIT (2b. Height Units; 1=inches; 2=centimeters)
 
-# Conversion functions
+# BMI conversion functions
 def pounds_to_kg(pounds):
     return pounds * 0.45359237
 
