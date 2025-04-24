@@ -52,6 +52,9 @@ adni_sc_clin = adni_sc[["RID", "VISCODE2", "EXAMDATE",
                         "NXVISUAL", "NXAUDITO", "NXTREMOR", "NXCONSCI", "NXNERVE", "NXMOTOR", "NXFINGER", "NXHEEL", "NXSENSOR", "NXTENDON", "NXPLANTA", "NXGAIT", "NXOTHER",
                         "VSWEIGHT", "VSWTUNIT", "VSHEIGHT", "VSHTUNIT", "VSBPSYS", "VSBPDIA", "VSPULSE", "VSRESP", "VSTEMP", "VSTMPSRC", "VSTMPUNT"]]
 
+# Fix values coded incorrectly as -4 (missing data)
+adni_sc_clin[col] = adni_sc_clin[col].replace(-4,-1, np.nan) #this was based on manual inspection of the data values in excel. May need to justify in R later.
+
 #Convert categorical variables into factors
 categorical_vars = [
       "PXGENAPP", "PXHEADEY", "PXNECK", "PXCHEST", "PXHEART", "PXABDOM", "PXEXTREM", "PXEDEMA", "PXPERIPH", "PXSKIN", "PXMUSCUL", "PXBACK", "PXOTHER",
@@ -59,23 +62,15 @@ categorical_vars = [
                         "VSWTUNIT", "VSHTUNIT", "VSTMPSRC", "VSTMPUNT"]]
 
 for col in categorical_vars:
-      combined_df[col] = combined_df[col].astype('category')
+      adni_sc_clin_v2[col] = adni_sc_clin_v2[col].astype('category')
 
 # Make sure numeric values are treated as numbers
-
-  numeric_vars = ['VSWEIGHT', 'VSHEIGHT', 'VSBPSYS', 'VSBPDIA', 'VSPULSE', 'VSRESP', 'VSTEMP']
+  numeric_vars = ["VSWEIGHT", "VSHEIGHT", "VSBPSYS", "VSBPDIA", "VSPULSE", "VSRESP", "VSTEMP"]
   for col in numeric_vars:
-      combined_df[col] = pd.to_numeric(combined_df[col], errors='coerce')
-  
-  # Fix values coded incorrectly as -4 (missing data)
-  combined_df['VSHEIGHT'] = combined_df['VSHEIGHT'].replace(-4, np.nan)
+      adni_sc_clin_v2[col] = pd.to_numeric(adni_sc_clin_v2[col], errors='coerce')
 
-
-
-
-
-
-
+# Descriptive stats
+adni_sc_clin_v2.describe()
 
 #Clinical variables: Vital signs 
 # (1a. Weight; Numeric) # (1b. Weight Units; 1=pounds; 2=kilograms)
