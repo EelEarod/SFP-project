@@ -45,9 +45,18 @@ print("Duplicate Rows Based on RID :")
 duplicate
 #If duplicates found, consult collaboratory team to advise on removal of datapoints
 
-#from screening dataset, select all relevant ID, exam_dates and clinical variables. Need to consult with SHEENA on new variable names. 
-#EXAMDATE can be any from the screening visit (Neuro, Phys, or Vitals) - ideally these should be on the same date/close enough in time to count as one timepoint. Check the exam dates to see if they differ?
-adni_sc_clin = adni_sc[["RID", "VISCODE2", "EXAMDATE", 
+#VIS DATE DATAFRAME
+  #Extract the RID, and the different VisDates. 
+  #-	Here we want a vis date screening variable
+  #Combine all vis dates into a table linked by the P ID. 
+    # If 3 = then create a df -  
+    #	If not – create df. 
+    # This would also tell us who would be dropped. 
+     # Then get a masters screening vis. Undecided on how at the moment. Determine missing data. 
+
+#from screening dataset, select all relevant ID, vis_dates and clinical variables. Need to consult with SHEENA on new variable names. 
+#VISDATE can be any from the screening visit (Neuro, Phys, or Vitals) - ideally these should be on the same date/close enough in time to count as one timepoint. Check the exam dates to see if they differ?
+adni_sc_clin = adni_sc[["RID", "VISCODE2", "VISDATE", 
                         "PXGENAPP", "PXHEADEY", "PXNECK", "PXCHEST", "PXHEART", "PXABDOM", "PXEXTREM", "PXEDEMA", "PXPERIPH", "PXSKIN", "PXMUSCUL", "PXBACK", "PXOTHER",
                         "NXVISUAL", "NXAUDITO", "NXTREMOR", "NXCONSCI", "NXNERVE", "NXMOTOR", "NXFINGER", "NXHEEL", "NXSENSOR", "NXTENDON", "NXPLANTA", "NXGAIT", "NXOTHER",
                         "VSWEIGHT", "VSWTUNIT", "VSHEIGHT", "VSHTUNIT", "VSBPSYS", "VSBPDIA", "VSPULSE", "VSRESP", "VSTEMP", "VSTMPSRC", "VSTMPUNT"]]
@@ -72,48 +81,11 @@ for col in categorical_vars:
 # Descriptive stats
 adni_sc_clin_v2.describe()
 
-#Clinical variables: Vital signs 
-# (1a. Weight; Numeric) # (1b. Weight Units; 1=pounds; 2=kilograms)
-# (2a. Height; Numeric) # (2b. Height Units; 1=inches; 2=centimeters)
-# (3a. Systolic  BP- mmHg; range: 76-250)
-# (3b. Diastolic  BP- mmHg; range: 36-130)
-# (4. Seated Pulse Rate (per minute); range: 40-130)
-# (5. Respirations (per minute); range: 6-40)
-# (6a. Temperature; range: 6-40) # (6b. Temperature Source; 1=Oral, 2=Tympanic, 3=Other);  (6c. Temperature Units, 1=Fahrenheit; 2=Celsius)
-
-#Identifier variable: Across all datasets
-#RID (Participant roster ID)
-
-#Screening clinical exam date variable: PHYSICAL, NEUROEXM, VITALS
-#EXAMDATE (Clinical Screening Examination Date)
-
-#Demographic and diagnostic variables at baseline characteristics: ADNIMERGE
-#EXAMDATE (Baseline examination date)
-#SITE (ADNI exam site)
-#DX_bl (Baseline diagnosis; AD=Alzheimer's disease; CN=cognitively normal; EMCI=early MCI; LMCI=late MCI; SMC=subjective memory concern)
-#AGE (Baseline age)
-#PTGENDER (Gender)
-#PTEDUCAT (Education)
-#PTRACCAT (Race)
-#APOE4 (APOE e4 carrier status; 0=non-carrier; 1=heterozygous carrier; 2=homozygous carrier)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # In[4] #TRANSFORMATIONS ON EXISTING VARIABLES- DORAE TO ATTEMPT AND LAUREN TO ADVISE HERE
 #Convert categorical variables (numeric) into factors - this is the majority of our clinical variables and our demographic/diagnostic variables
-#turning categorical variables into factors/numerical using import pandas as pd
+
+
+#Turning categorical variables into factors/numerical using import pandas as pd
 PTGENDER, PTEDUCAT, PTETHCAT, PTRACCAT, PTMARRY, APOE4
 
 ?info not available for ADNIMERGE
