@@ -61,7 +61,7 @@ adni_sc_clin = adni_sc[["RID", "VISCODE2", "VISDATE",
                         "NXVISUAL", "NXAUDITO", "NXTREMOR", "NXCONSCI", "NXNERVE", "NXMOTOR", "NXFINGER", "NXHEEL", "NXSENSOR", "NXTENDON", "NXPLANTA", "NXGAIT", "NXOTHER",
                         "VSWEIGHT", "VSWTUNIT", "VSHEIGHT", "VSHTUNIT", "VSBPSYS", "VSBPDIA", "VSPULSE", "VSRESP", "VSTEMP", "VSTMPSRC", "VSTMPUNT"]]
 
-# Fix values coded incorrectly as -4 (missing data)
+# Fix values coded incorrectly as -4 oe -1 (missing data)
 adni_sc_clin[col] = adni_sc_clin[col].replace(-4,-1, np.nan) #this was based on manual inspection of the data values in excel. May need to justify in R later.
 
 #Convert categorical variables into factors
