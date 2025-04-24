@@ -1,3 +1,16 @@
+#To be done within terminal:
+
+#Set directory to Wolfson PNU - Dorae's folder Sheena to advise on this step and to provide exact location of the data
+
+#Now to create and activate environment to set the versions of python/packages.
+#I am 99% sure that this needs to be done via the terminal. Sheena/Sara to further advise on this.
+
+#Create the environment from the myenv.yml file (decide whether yml file should be saved in Dorae's home or Wolfson PNU directory - a draft version is in the github). Sheena/Sara to further advise on this.
+conda env create -f myenv.yml
+
+#Activate the new environment
+conda activate myenv
+
 
 # In[1]:
 ##import libraries (basic packages)
@@ -16,6 +29,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 
 # In[2]:
+
 ##Importing dataset
 ##WE WILL NEED TO DISCUSS WITH SHEENA HOW TO SET YOUR DIRECTORY TO PNU WOLFSON WITHIN THE PYTHON ENVIRONMENT
 data = 'C:/datasets/adni_data.csv'
