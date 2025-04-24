@@ -24,11 +24,7 @@ data = 'C:/datasets/adni_data.csv'
 df = pd.read_csv(data)
 
 ##Preview dataset
-df.head()        # First 5 rows
-df.tail()        # Last 5 rows
-df.sample(5)     # Random 5 rows
-
-
+df.print()
 
 # In[3]:
 ##check data shape and info
@@ -36,7 +32,6 @@ df.shape         # (rows, columns)
 df.columns       # Column names
 df.info()        # Data types & non-null counts
 df.dtypes        # Just data types
-
 
 
 # In[4]:
@@ -48,20 +43,24 @@ df[df.isnull().any(axis=1)]  # Rows with missing values
 ##BASED ON THESE VALUES WE WILL DETERMINE WHETHER ANY FURTHER ACTION IS REQUIRED (e.g. dropping rows with NaN)
 
 
-
-
 # In[5]:
+
+    #LB: IN HERE YOU GO BACK TO data - do you mean df?
+
 #Understand the visit index count (screening vs bl)
 data['VISCODE'].value_counts()
 
 #Count the number of entries per participant (RID)
-dara['RID'].value_counts()
+data['RID'].value_counts()
+
+    #LB: NEED TO define adni before using it as a variable
 
 #Include only adni baseline visits 
 #step 1: filter entries with VISCODE sc
 adni = adni[adni['VISCODE']== 'sc' ]
 
 #Display the data for a specific participan ID
+##??
 specific_participant_ID = RID12345
 print(adni[adni['RID']== specific_participant_ID])
 
@@ -79,6 +78,7 @@ df.describe()     # count, mean, std, min, max, quartiles
 #histogram 
 #box plot 
 
+# LB: AT THE MOMENT YOU DEFINE DATA twice. EVEN THOUGH THIS IS A PRACISE PLEASE CAN YOU DEFINE THIS AS 'DATA_PRATCISE' AS SOMETHING DIFFERENT.
 #Histograms for numeric variable distributions - using matplotlib.pylot as plt
 AGE, WEIGHT, HEIGHT, BMI, BP, HR, RR, TEMP, TOTAL NE SCORE, TOTAL PE SCORE 
 # Example data
@@ -99,8 +99,6 @@ plt.xlabel('Value')
 plt.ylabel('Count')
 plt.show()
 #add a smooth curve showing the data distribution
-kde=True 
-
 
 #box plot - using matplotlib.pyplot as plt
 
@@ -133,16 +131,17 @@ print(outliers)
 
 # In[8]
 #turning categorical variables into factors/numerical using import pandas as pd
-PTGENDER, PTEDUCAT, PTETHCAT, PTRACCAT, PTMARRY, APOE4
+# PTGENDER, PTEDUCAT, PTETHCAT, PTRACCAT, PTMARRY, APOE4
 
 # Sample DataFrame
 df = pd.DataFrame({
     'PTGENDER': ['Male', 'Female', 'Female', 'Male', 'Other']
 })
 # Convert to category codes
-df['Gender_encoded'] = df['PTGENDER].astype('category').cat.codes
+df['Gender_encoded'] = df['PTGENDER'].astype('category').cat.codes
 print(df)
 
+#LB: ONLY PTGENDER IS USED - DO YOU WANT TO HANDLE OTHER VARIABLES TOO?
 
 # In[9]:
 #Total scores for neuro and physical exams (e.g. adding up number of abnormal domains across measures)
@@ -151,43 +150,58 @@ print(df)
 #Abdomen #Back #Chest #Oedema #Extremeties #General appearance #Head, Eyes, ENT #Heart #MSK #Neck #Other #Peripheral vascular #Skin and Appendages 
 
 df = pd.read_csv("adni_physical_examination_domains") 
+
+# LB: YOU CANT DEFINE THE DF AGAIN AS DF AS THIS VARIABLE ALREADY HAS ONE. USE DF_PHYSICAL.
+# LB: ALSO IF THIS IS A CSV THEN YOU NEED TO ADD .CSV AFTER THE FILE NAME - OTHERWISE IT IS LIKLEY TO SAY THAT IT IS NOT FOUND.
+
 # Calculate total sum of scores
 total_score = df['normal/abnormal'].sum()
 print("Total Score:", total_score)
 
+#LB: DOES THIS COLUMN EXIST - IS IS CALLED NORMAL/ABNORMAL?
+
 ##Total number of abnormal neurological examination domains 
 # Load the CSV
 df = pd.read_csv("adni_neurological_examination_domains") #change file name 
+
+##LB: SAME AS BEFORE.
+
 # Calculate total sum of scores
 total_score = df['normal/abnormal'].sum()
 print("Total Score:", total_score)
 
 # In[10]:
+
 #Making new variables based on existing ones
-## BMI
-VSWEIGHT=float(input())
-VSHEIGHT=float(input())
-bmi = VSWEIGHT/(VSHEIGHT)**2
 
-if bmi<18.5:
-    print("Underweight")
-elif bmi>=18.5 and bmi<25:
-    print("Normal")
-elif bmi>=25 and bmi<30:
-    print("Overweight")
-else:
-    print("Obesity")
+# In[10]: Making new variables based on existing ones
 
-## MAP
-VSBPSYS=float(input))
-VSBPDIA=float(input))
-MAP = (VSBPSYS + 2(VSBPDIA))/3
+#LB; I'VE ALTERED THIS FOR YOU BELOW.
+
+# Function to calculate BMI and interpret the result
+def calculate_bmi(weight_kg, height_m):
+    bmi = weight_kg / (height_m ** 2)
+    print(f"BMI: {bmi:.2f}")
+    if bmi < 18.5:
+        print("Underweight")
+    elif bmi < 25:
+        print("Normal")
+    elif bmi < 30:
+        print("Overweight")
+    else:
+        print("Obesity")
+    return bmi
+
+# Function to calculate MAP (Mean Arterial Pressure)
+def calculate_map(systolic, diastolic):
+    map_val = (systolic + 2 * diastolic) / 3
+    print(f"Mean Arterial Pressure (MAP): {map_val:.2f}")
+    return map_val
 
 #Temperature
 #standardise temperature - celsius. 
 
 #create seperate variables for temperature based on oral or tympanic or other sources for sensitivity analyses if temp generally is significant.
-
 
 #Diagnostic categories; combine MCI groups into one and combine SMC and CN into 1 controls category
 
