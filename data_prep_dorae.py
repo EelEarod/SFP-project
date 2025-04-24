@@ -46,12 +46,22 @@ duplicate
 #If duplicates found, consult collaboratory team to advise on removal of datapoints
 
 #from screening dataset, select all relevant ID, exam_dates and clinical variables. Need to consult with SHEENA on new variable names. 
-#EXAMDATE can be any from the screening visit (Neuro, Phys, or Vitals) - ideally these should be on the same date/close enough in time to count as one timepoint
+#EXAMDATE can be any from the screening visit (Neuro, Phys, or Vitals) - ideally these should be on the same date/close enough in time to count as one timepoint. Check the exam dates to see if they differ?
 adni_sc_clin = adni_sc[["RID", "VISCODE2", "EXAMDATE", 
-                        "PXGENAPP", "PXHEADEY", "PXNECK", "PXCHEST", "PXHEART", "PXABDOM", "PXEXTREM", "PXEDEMA", "PXPERIPH", "PXSKIN", "PXMUSCUL", "PXBACK", "PXOTHER"
-                        
-                        
-                        EXAMDATE]]
+                        "PXGENAPP", "PXHEADEY", "PXNECK", "PXCHEST", "PXHEART", "PXABDOM", "PXEXTREM", "PXEDEMA", "PXPERIPH", "PXSKIN", "PXMUSCUL", "PXBACK", "PXOTHER",
+                        NXVISUAL", NXAUDITO", NXTREMOR", NXCONSCI", NXNERVE", NXMOTOR", NXFINGER", NXHEEL", NXSENSOR", NXTENDON", "NXPLANTA", "NXGAIT", "NXOTHER",
+                        "VSWEIGHT", "VSWTUNIT", "VSHEIGHT", "VSHTUNIT", "VSBPSYS", "VSBPDIA", "VSPULSE", "VSRESP", "VSTEMP", "VSTMPSRC", "VSTMPUNT"]]
+
+#Convert categorical variables into factors
+  categorical_vars = [
+      "PXGENAPP", "PXHEADEY", "PXNECK", "PXCHEST", "PXHEART", "PXABDOM", "PXEXTREM", "PXEDEMA", "PXPERIPH", "PXSKIN", "PXMUSCUL", "PXBACK", "PXOTHER",
+                        NXVISUAL", NXAUDITO", NXTREMOR", NXCONSCI", NXNERVE", NXMOTOR", NXFINGER", NXHEEL", NXSENSOR", NXTENDON", "NXPLANTA", "NXGAIT", "NXOTHER",
+                        "VSWEIGHT", "VSWTUNIT", "VSHEIGHT", "VSHTUNIT", "VSBPSYS", "VSBPDIA", "VSPULSE", "VSRESP", "VSTEMP", "VSTMPSRC", "VSTMPUNT"
+
+
+
+
+#Convert numeric variables into numerics
 
 
 
@@ -60,45 +70,15 @@ adni_sc_clin = adni_sc[["RID", "VISCODE2", "EXAMDATE",
 
 
 
-
-#clinical variables: physical examination (1=normal, 2= abnormal)
-#PXGENAPP (1. General Appearance)
-#PXHEADEY (2. Head, Eyes, Ears, Nose and Throat
-#PXNECK (3. Neck)
-#PXCHEST (4. Chest)
-#PXHEART (5. Heart)
-#PXABDOM (6. Abdomen)
-#PXEXTREM (7. Extremities)
-#PXEDEMA (8. Edema)
-#PXPERIPH (9. Peripheral Vascular)
-#PXSKIN (10. Skin and Appendages)
-#PXMUSCUL (11. Musculoskeletal)
-#PXBACK (12. Back)
-#PXOTHER (13. Other)
-
-#clinical variables: neurological examination (1=Absent, 2= present)
-#NXVISUAL (1. Significant Visual Impairment)
-#NXAUDITO (2. Significant Auditory Impairment)
-#NXTREMOR (3. Tremor)
-#NXCONSCI (4. Level of Consciousness)
-#NXNERVE (5. Cranial Nerves)
-#NXMOTOR (6. Motor Strength)
-#NXFINGER (7a. Cerebellar - Finger to Nose)
-#NXHEEL (7b. Cerebellar - Heel to Shin)
-#NXSENSOR (8. Sensory)
-#NXTENDON (9. Deep Tendon Reflexes)
-#NXPLANTA (10. Plantar Reflexes)
-#NXGAIT (11. Gait)
-#NXOTHER (12. Other)
 
 #Clinical variables: Vital signs 
-#VSWEIGHT (1a. Weight; Numeric) #VSWTUNIT (1b. Weight Units; 1=pounds; 2=kilograms)
-#VSHEIGHT (2a. Height; Numeric) #VSHTUNIT (2b. Height Units; 1=inches; 2=centimeters)
-#VSBPSYS (3a. Systolic  BP- mmHg; range: 76-250)
-#VSBPDIA (3b. Diastolic  BP- mmHg; range: 36-130)
-#VSPULSE (4. Seated Pulse Rate (per minute); range: 40-130)
-#VSRESP (5. Respirations (per minute); range: 6-40)
-#VSTEMP (6a. Temperature; range: 6-40) #VSTMPSRC (6b. Temperature Source; 1=Oral, 2=Tympanic, 3=Other); VSTMPUNT (6c. Temperature Units, 1=Fahrenheit; 2=Celsius)
+# (1a. Weight; Numeric) # (1b. Weight Units; 1=pounds; 2=kilograms)
+# (2a. Height; Numeric) # (2b. Height Units; 1=inches; 2=centimeters)
+# (3a. Systolic  BP- mmHg; range: 76-250)
+# (3b. Diastolic  BP- mmHg; range: 36-130)
+# (4. Seated Pulse Rate (per minute); range: 40-130)
+# (5. Respirations (per minute); range: 6-40)
+# (6a. Temperature; range: 6-40) # (6b. Temperature Source; 1=Oral, 2=Tympanic, 3=Other);  (6c. Temperature Units, 1=Fahrenheit; 2=Celsius)
 
 #Identifier variable: Across all datasets
 #RID (Participant roster ID)
