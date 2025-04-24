@@ -100,8 +100,18 @@ def inches_to_cm(inches):
 adni_sc_clin_v2['VSWEIGHT'] = adni_sc_clin_v2.apply(lambda row: pounds_to_kg(row['VSWEIGHT']) if row['VSWTUNIT'] == 1 else row['VSWEIGHT'], axis=1)
 adni_sc_clin_v2['VSHEIGHT'] = adni_sc_clin_v2.apply(lambda row: inches_to_cm(row['VSHEIGHT']) if row['VSHTUNIT'] == 1 else row['VSHEIGHT'], axis=1)
 
-#create a VSWEIGHT variable with just kg
+#calculate BMI
+BMI = adni_sc_clin_v2['VSWEIGHT'] / (adni_sc_clin_v2['VSHEIGHT']/100)**2 
 
+#this is creating a new varibale - need to name it. 
+if bmi<18.5:
+    print("Underweight")
+elif bmi>=18.5 and bmi<25:
+    print("Normal")
+elif bmi>=25 and bmi<30:
+    print("Overweight")
+else:
+    print("Obesity")
 
 
 
