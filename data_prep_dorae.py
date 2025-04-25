@@ -134,13 +134,13 @@ adni_sc_clin_v2['VSTEMP'] = adni_sc_clin_v2.apply(lambda row: fahrenheit_to_cels
 ##physical examination domains (1= normal, 2=abnormal)
 #Abdomen #Back #Chest #Oedema #Extremeties #General appearance #Head, Eyes, ENT #Heart #MSK #Neck #Other #Peripheral vascular #Skin and Appendages 
 
-Physical examination 
-"PXGENAPP", "PXHEADEY", "PXNECK", "PXCHEST", "PXHEART", "PXABDOM", "PXEXTREM",
-"PXEDEMA", "PXPERIPH", "PXSKIN", "PXMUSCUL", "PXBACK", "PXOTHER",
+
+"VSWEIGHT", "VSWTUNIT", "VSHEIGHT", "VSHTUNIT", "VSBPSYS", "VSBPDIA", "VSPULSE", "VSRESP", "VSTEMP", "VSTMPSRC", "VSTMPUNT"]]
 
 
-
-
+Neurological examination variables
+"NXVISUAL", "NXAUDITO", "NXTREMOR", "NXCONSCI", "NXNERVE",
+"NXMOTOR", "NXFINGER", "NXHEEL", "NXSENSOR", "NXTENDON", "NXPLANTA", "NXGAIT", "NXOTHER"
 
 #file name adni_sc
 Neurological examination 
@@ -155,22 +155,52 @@ neurological_vars = [
 with open('adni_sc.csv', 'r') as file:
     reader = csv.DictReader(file)
 
-    # Loop through each individual's row
-    for row in reader:
-        participant_id = row.get("RID") or row.get("ID") or "Unknown"  # Adjust if there's a unique ID column
+# Loop through each individual's row
+for row in reader:
+        participant_id = row.get("RID") # Adjust if there's a unique ID column
 
-        # Sum only neurological variables, handling missing/empty values safely
-        total_score = sum(
+# Sum only neurological variables, handling missing/empty values safely
+total_score = sum(
             int(row[var]) if row[var].isdigit() else 0 for var in neurological_vars
         )
 
-        print(f"Participant {participant_id} - Total Neurological Score: {total_score}")
+print(f"Participant {participant_id} - Total Neurological Score: {total_score}")
+
+
+Physical examination 
+##physical examination domains (1= normal, 2=abnormal)
+#Abdomen #Back #Chest #Oedema #Extremeties #General appearance #Head, Eyes, ENT #Heart #MSK #Neck #Other #Peripheral vascular #Skin and Appendages 
+
+"PXGENAPP", "PXHEADEY", "PXNECK", "PXCHEST", "PXHEART", "PXABDOM", "PXEXTREM",
+"PXEDEMA", "PXPERIPH", "PXSKIN", "PXMUSCUL", "PXBACK", "PXOTHER",
+
+#file name adni_sc
+Physical examination 
+# Variables to sum
+physical_vars = [
+    "PXGENAPP", "PXHEADEY", "PXNECK", "PXCHEST", 
+    "PXHEART", "PXABDOM", "PXEXTREM", "PXEDEMA", 
+    "PXPERIPH", "PXSKIN", "PXMUSCUL", "PXBACK", "PXOTHER"
+]
+
+# Open the file
+with open('adni_sc.csv', 'r') as file:
+    reader = csv.DictReader(file)
+
+# Loop through each individual's row
+for row in reader:
+        participant_id = row.get("RID") # Adjust if there's a unique ID column
+
+# Sum only neurological variables, handling missing/empty values safely
+total_score = sum(
+            int(row[var]) if row[var].isdigit() else 0 for var in physical_vars
+        )
+
+print(f"Participant {participant_id} - Total Physical Score: {total_score}")
 
 
 
-
-
-
+///////////
 
 df = pd.read_csv("adni_physical_examination_domains") 
 # Calculate total sum of scores
@@ -185,7 +215,18 @@ total_score = df['normal/abnormal'].sum()
 print("Total Score:", total_score)
 
 
+///////////
+
 ##DORAE TO CREATE HISTOGRAMS FOR ALL NUMERIC CLINICAL VARIABLES***************************************************************************************************************************************************
+
+Numeric Clinical Variables
+"VSWEIGHT", "VSWTUNIT",
+"VSHEIGHT", "VSHTUNIT",
+"VSBPSYS", "VSBPDIA", 
+"VSPULSE", 
+"VSRESP", 
+"VSTEMP", "VSTMPSRC", "VSTMPUNT"
+
 ##EXAMPLE PROVIDED BY LAUREN BELOW. PLEASE REPEAT FOR ALL NUMERIC CLINICAL VARIABLES
 
   #Histograms show us if most values are grouped together, if there are weird spikes, or if anything looks strange.
@@ -198,7 +239,66 @@ print("Total Score:", total_score)
       plt.show()
     #Repeat that for any variable you're interested in (VSHEIGHT, VSWEIGHT, etc.).
 
+  #Look at distribution of diastolic blood pressure
+      plt.figure(figsize=(8, 5))
+      sns.histplot(combined_df['VSBPDIA'].dropna(), bins=30, kde=True)
+      plt.title('Diastolic Blood Pressure Distribution')
+      plt.xlabel('Diastolic BP (mmHg)')
+      plt.ylabel('Count')
+      plt.show()
 
+  #Look at distribution of Height
+      plt.figure(figsize=(8, 5))
+      sns.histplot(combined_df['VSHEIGHT'].dropna(), bins=30, kde=True)
+      plt.title('Height Distribution')
+      plt.xlabel('Height (cm)')
+      plt.ylabel('Count')
+      plt.show()
+
+  #Look at distribution of weight
+      plt.figure(figsize=(8, 5))
+      sns.histplot(combined_df['VSWEIGHT'].dropna(), bins=30, kde=True)
+      plt.title('Weight Distribution')
+      plt.xlabel('Weight (kg)')
+      plt.ylabel('Count')
+      plt.show()
+
+  #Look at distribution of Pulse rate (beats per minute)
+      plt.figure(figsize=(8, 5))
+      sns.histplot(combined_df['VSPULSE'].dropna(), bins=30, kde=True)
+      plt.title('Pulse Rate Distribution')
+      plt.xlabel('Pulse rate (bpm)')
+      plt.ylabel('Count')
+      plt.show()
+
+#Look at distribution of respiratory rate (breaths per minute)
+      plt.figure(figsize=(8, 5))
+      sns.histplot(combined_df['VSRESP'].dropna(), bins=30, kde=True)
+      plt.title('Resrpiratory Rate Distribution')
+      plt.xlabel('Respiratory Rate (bpm)')
+      plt.ylabel('Count')
+      plt.show()
+
+
+#Look at distribution of Temperature 
+      plt.figure(figsize=(8, 5))
+      sns.histplot(combined_df['VSTEMP'].dropna(), bins=30, kde=True)
+      plt.title('Pulse Rate Distribution')
+      plt.xlabel('Pulse rate (bpm)')
+      plt.ylabel('Count')
+      plt.show()
+
+
+#??Look at distribution of BMI
+      plt.figure(figsize=(8, 5))
+      sns.histplot(combined_df['BMI'].dropna(), bins=30, kde=True)
+      plt.title('BMI Distribution')
+      plt.xlabel('BMI (kg/m²)')
+      plt.ylabel('Count')
+      plt.show()
+
+
+////////////////////
 
 ##DORAE TO DO OUTLIER DETECTION FOR ALL NUMERIC CLINICAL VARIABLES***************************************************************************************************************************************************
 ##EXAMPLE PROVIDED BY LAUREN BELOW. PLEASE REPEAT FOR ALL NUMERIC CLINICAL VARIABLES
@@ -219,8 +319,33 @@ print("Total Score:", total_score)
   outliers_bp = detect_outliers_iqr(combined_df, 'VSBPSYS')
   print("Number of outliers in Systolic BP:", outliers_bp.shape[0])
 
+  # Find outliers in diastolic  BP
+  outliers_bp = detect_outliers_iqr(combined_df, 'VSBPDIA')
+  print("Number of outliers in diastolic BP:", outliers_bp.shape[0])
 
+  # Find outliers in BMI
+  outliers_bp = detect_outliers_iqr(combined_df, 'BMI')
+  print("Number of outliers in BMI:", outliers_bp.shape[0])
 
+  # Find outliers in weight
+  outliers_bp = detect_outliers_iqr(combined_df, 'VSWEIGHT')
+  print("Number of outliers in weight:", outliers_bp.shape[0])
+
+ # Find outliers in height
+  outliers_bp = detect_outliers_iqr(combined_df, 'VSHEIGHT')
+  print("Number of outliers in height:", outliers_bp.shape[0])
+
+  # Find outliers in pulse rate (beats per minute)
+  outliers_bp = detect_outliers_iqr(combined_df, 'VSPULSE')
+  print("Number of outliers in pulse rate:", outliers_bp.shape[0])
+
+  # Find outliers in respiratory rate (breaths per minute)
+  outliers_bp = detect_outliers_iqr(combined_df, 'VSRESP')
+  print("Number of outliers in pulse rate:", outliers_bp.shape[0])
+
+  # Find outliers in temperature
+  outliers_bp = detect_outliers_iqr(combined_df, 'VSTEMP')
+  print("Number of outliers in pulse rate:", outliers_bp.shape[0])
 
 
 
