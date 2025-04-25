@@ -62,7 +62,7 @@ adni_sc_clin = adni_sc[["RID", "VISCODE2", "VISDATE",
                         "VSWEIGHT", "VSWTUNIT", "VSHEIGHT", "VSHTUNIT", "VSBPSYS", "VSBPDIA", "VSPULSE", "VSRESP", "VSTEMP", "VSTMPSRC", "VSTMPUNT"]]
 
 # Fix values coded incorrectly as -4 oe -1 (missing data)
-adni_sc_clin[col] = adni_sc_clin[col].replace(-4,-1, np.nan) #this was based on manual inspection of the data values in excel. May need to justify in R later.
+adni_sc_clin[col] = adni_sc_clin[col].replace(-4,-1, np.nan) #this was based on manual inspection of the data values in excel. May need to justify in Python/Jupyter later.
 
 #Convert categorical variables into factors
 categorical_vars = [
@@ -118,6 +118,122 @@ adni_sc_clin_v2['BMI_CATEGORY'] = adni_sc_clin_v2['BMI_CATEGORY'].astype('catego
 #Calculate MAP. LAUREN TO DOUBLECHECK THIS CODE.
 MAP = (adni_sc_clin_v2['VSBPSYS'] + 2(adni_sc_clin_v2['VSBPDIA']))/3
 
+#Convert all temperature unit from farenheit to celsius. LAUREN TO DOUBLECHECK THIS CODE. 
+
+def fahrenheit_to_celsius(fahrenheit):
+    celsius = (fahrenheit - 32) * 5 / 9
+    return celsius
+
+adni_sc_clin_v2['VSTEMP'] = adni_sc_clin_v2.apply(lambda row: fahrenheit_to_celsius(row['VSTEMP']) if row['VSTMPUNT'] == 1 else row['VSTEMP'], axis=1)
+
+
+
+##DORAE TO WRITE CODE FOR TOTAL NE AND PE SCORES***************************************************************************************************************************************************
+##PREVIOUS CODE COPY AND PASTED BELOW
+
+##physical examination domains (1= normal, 2=abnormal) --> ?change to 0=normal, 1=abnormal 
+#Abdomen #Back #Chest #Oedema #Extremeties #General appearance #Head, Eyes, ENT #Heart #MSK #Neck #Other #Peripheral vascular #Skin and Appendages 
+
+
+df = pd.read_csv("adni_physical_examination_domains") 
+# Calculate total sum of scores
+total_score = df['normal/abnormal'].sum()
+print("Total Score:", total_score)
+
+##Total number of abnormal neurological examination domains 
+# Load the CSV
+df = pd.read_csv("adni_neurological_examination_domains") #change file name 
+# Calculate total sum of scores
+total_score = df['normal/abnormal'].sum()
+print("Total Score:", total_score)
+
+
+##DORAE TO CREATE HISTOGRAMS FOR ALL NUMERIC CLINICAL VARIABLES***************************************************************************************************************************************************
+##EXAMPLE PROVIDED BY LAUREN BELOW. PLEASE REPEAT FOR ALL NUMERIC CLINICAL VARIABLES
+
+  #Histograms show us if most values are grouped together, if there are weird spikes, or if anything looks strange.
+  #Example: Look at distribution of systolic blood pressure
+      plt.figure(figsize=(8, 5))
+      sns.histplot(combined_df['VSBPSYS'].dropna(), bins=30, kde=True)
+      plt.title('Systolic Blood Pressure Distribution')
+      plt.xlabel('Systolic BP (mmHg)')
+      plt.ylabel('Count')
+      plt.show()
+    #Repeat that for any variable you're interested in (VSHEIGHT, VSWEIGHT, etc.).
+
+
+
+##DORAE TO DO OUTLIER DETECTION FOR ALL NUMERIC CLINICAL VARIABLES***************************************************************************************************************************************************
+##EXAMPLE PROVIDED BY LAUREN BELOW. PLEASE REPEAT FOR ALL NUMERIC CLINICAL VARIABLES
+
+#OUTLIER DETECTION METHODS FOR NUMERIC VARIABLES
+  #Outliers can be data errors, or they can point to unusual cases we want to know about.
+  #USE IRQ - easiest and most common.
+  
+  #def detect_outliers_iqr(data, column):
+      q1 = data[column].quantile(0.25)
+      q3 = data[column].quantile(0.75)
+      iqr = q3 - q1
+      lower_bound = q1 - 1.5 * iqr
+      upper_bound = q3 + 1.5 * iqr
+      return data[(data[column] < lower_bound) | (data[column] > upper_bound)]
+  
+  # Find outliers in systolic BP
+  outliers_bp = detect_outliers_iqr(combined_df, 'VSBPSYS')
+  print("Number of outliers in Systolic BP:", outliers_bp.shape[0])
+
+
+
+
+
+
+# In[4]:
+#To begin creating our demographic/diagnostic dataset (covariates/outcomes) we will filter our main dataset by subjects with only baseline visits
+adni_bl = adni[adni['VISCODE2']== 'bl']
+
+#Ensure there are no duplicate IDs
+#Select duplicate rows except first occurance based on RID (ADNI ID variable)
+duplicate = adni_bl[adni_bl.duplicated(subset=['RID'])]
+print("Duplicate Rows Based on RID :")
+#Print the resultant dataframe
+duplicate
+#If duplicates found, consult collaboratory team to advise on removal of datapoints
+
+
+#from baseline dataset, select all relevant ID, exam dates and covariate/outcome variables. Need to consult with SHEENA on new variable names. 
+#VISDATE can be any from the screening visit (Neuro, Phys, or Vitals) - ideally these should be on the same date/close enough in time to count as one timepoint. Check the exam dates to see if they differ?
+adni_bl_demo_diag = adni_bl[["RID", "VISCODE2", "EXAMDATE", "SITE",
+                       "DX_bl", "AGE", "PTGENDER", "PTEDUCAT", "PTRACCAT", "APOE4", "PTMARRY"]]
+
+# Fix values coded incorrectly as -4 oe -1 (missing data)
+adni_bl_demo_diag[col] = adni_bl_demo_diag[col].replace(-4,-1, np.nan) #this was based on manual inspection of the data values in excel. May need to justify in Python/Jupyter later.
+
+#Convert categorical variables into factors
+categorical_vars = ["DX_bl", "PTGENDER", "PTRACCAT", "APOE4", "PTMARRY"]]
+
+for col in categorical_vars:
+      adni_bl_demo_diag_v2[col] = adni_bl_demo_diag_v2[col].astype('category')
+
+# Make sure numeric values are treated as numbers
+numeric_vars = ["AGE", "PTEDUCAT"]
+  
+for col in numeric_vars:
+      adni_bl_demo_diag_v2[col] = pd.to_numeric(adni_bl_demo_diag_v2[col], errors='coerce')
+
+# Descriptive stats
+adni_bl_demo_diag_v2.describe()
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -171,58 +287,12 @@ df['Gender_encoded'] = df['PTGENDER].astype('category').cat.codes
 print(df)
 
 
-#Ensure numeric variables are classified as numeric and not another category (e.g. string)
-#Ensure missing values are coded properly (for example may be -4 for some of the height values where the data not collected properly)
 
 
 
 
 
-#NEW VARIABLES TO CALCULATE - DORAE TO ATTEMPT AND LAUREN TO ADVISE HERE
-e.g. BMI, MAP, 
-total NE score, total PE score 
-#Total scores for neuro and physical exams (e.g. adding up number of abnormal domains across measures)
 
-##physical examination domains (1= normal, 2=abnormal) --> ?change to 0=normal, 1=abnormal 
-#Abdomen #Back #Chest #Oedema #Extremeties #General appearance #Head, Eyes, ENT #Heart #MSK #Neck #Other #Peripheral vascular #Skin and Appendages 
-
-df = pd.read_csv("adni_physical_examination_domains") 
-# Calculate total sum of scores
-total_score = df['normal/abnormal'].sum()
-print("Total Score:", total_score)
-
-##Total number of abnormal neurological examination domains 
-# Load the CSV
-df = pd.read_csv("adni_neurological_examination_domains") #change file name 
-# Calculate total sum of scores
-total_score = df['normal/abnormal'].sum()
-print("Total Score:", total_score)
-
-# In[10]:
-#Making new variables based on existing ones
-## BMI
-VSWEIGHT=float(input())
-VSHEIGHT=float(input())
-bmi = VSWEIGHT/(VSHEIGHT)**2
-
-if bmi<18.5:
-    print("Underweight")
-elif bmi>=18.5 and bmi<25:
-    print("Normal")
-elif bmi>=25 and bmi<30:
-    print("Overweight")
-else:
-    print("Obesity")
-
-## MAP
-VSBPSYS=float(input))
-VSBPDIA=float(input))
-MAP = (VSBPSYS + 2(VSBPDIA))/3
-
-#Temperature
-#standardise temperature - celsius. 
-
-#create seperate variables for temperature based on oral or tympanic or other sources for sensitivity analyses if temp generally is significant.
  
 
 # In[5]
