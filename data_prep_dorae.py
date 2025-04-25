@@ -131,14 +131,10 @@ adni_sc_clin_v2['VSTEMP'] = adni_sc_clin_v2.apply(lambda row: fahrenheit_to_cels
 ##DORAE TO WRITE CODE FOR TOTAL NE AND PE SCORES***************************************************************************************************************************************************
 ##PREVIOUS CODE COPY AND PASTED BELOW
 
-##physical examination domains (1= normal, 2=abnormal)
+Physical examination variables (1= normal, 2=abnormal)
 #Abdomen #Back #Chest #Oedema #Extremeties #General appearance #Head, Eyes, ENT #Heart #MSK #Neck #Other #Peripheral vascular #Skin and Appendages 
 
-
-"VSWEIGHT", "VSWTUNIT", "VSHEIGHT", "VSHTUNIT", "VSBPSYS", "VSBPDIA", "VSPULSE", "VSRESP", "VSTEMP", "VSTMPSRC", "VSTMPUNT"]]
-
-
-Neurological examination variables
+Neurological examination variables (1= normal, 2=abnormal)
 "NXVISUAL", "NXAUDITO", "NXTREMOR", "NXCONSCI", "NXNERVE",
 "NXMOTOR", "NXFINGER", "NXHEEL", "NXSENSOR", "NXTENDON", "NXPLANTA", "NXGAIT", "NXOTHER"
 
@@ -199,7 +195,6 @@ total_score = sum(
 print(f"Participant {participant_id} - Total Physical Score: {total_score}")
 
 
-
 ///////////
 
 df = pd.read_csv("adni_physical_examination_domains") 
@@ -220,12 +215,7 @@ print("Total Score:", total_score)
 ##DORAE TO CREATE HISTOGRAMS FOR ALL NUMERIC CLINICAL VARIABLES***************************************************************************************************************************************************
 
 Numeric Clinical Variables
-"VSWEIGHT", "VSWTUNIT",
-"VSHEIGHT", "VSHTUNIT",
-"VSBPSYS", "VSBPDIA", 
-"VSPULSE", 
-"VSRESP", 
-"VSTEMP", "VSTMPSRC", "VSTMPUNT"
+"VSWEIGHT", "VSWTUNIT", "VSHEIGHT", "VSHTUNIT", "VSBPSYS", "VSBPDIA", "VSPULSE", "VSRESP", "VSTEMP", "VSTMPSRC", "VSTMPUNT"
 
 ##EXAMPLE PROVIDED BY LAUREN BELOW. PLEASE REPEAT FOR ALL NUMERIC CLINICAL VARIABLES
 
@@ -371,7 +361,7 @@ adni_bl_demo_diag = adni_bl[["RID", "VISCODE2", "EXAMDATE", "SITE",
 adni_bl_demo_diag[col] = adni_bl_demo_diag[col].replace(-4,-1, np.nan) #this was based on manual inspection of the data values in excel. May need to justify in Python/Jupyter later.
 
 #Convert categorical variables into factors
-categorical_vars = ["DX_bl", "PTGENDER", "PTRACCAT", "APOE4", "PTMARRY"]]
+categorical_vars = ["DX_bl", "PTGENDER", "PTRACCAT", "APOE4", "PTMARRY"]
 
 for col in categorical_vars:
       adni_bl_demo_diag_v2[col] = adni_bl_demo_diag_v2[col].astype('category')
@@ -398,6 +388,8 @@ adni_bl_demo_diag_v2.describe()
 
 merged_on_proteomics_inner = pd.merge(proteomics, metabolomics_data_1, on='eid', how='inner')
 participants_after_proteomics_inner_join = merged_on_proteomics_inner['eid'].nunique()
+
+
 
 
 
@@ -470,6 +462,7 @@ df = pd.DataFrame({
 # Convert to category codes
 df['Gender_encoded'] = df['PTGENDER].astype('category').cat.codes
 print(df)
+
 
 
 
