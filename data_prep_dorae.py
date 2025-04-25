@@ -131,8 +131,45 @@ adni_sc_clin_v2['VSTEMP'] = adni_sc_clin_v2.apply(lambda row: fahrenheit_to_cels
 ##DORAE TO WRITE CODE FOR TOTAL NE AND PE SCORES***************************************************************************************************************************************************
 ##PREVIOUS CODE COPY AND PASTED BELOW
 
-##physical examination domains (1= normal, 2=abnormal) --> ?change to 0=normal, 1=abnormal 
+##physical examination domains (1= normal, 2=abnormal)
 #Abdomen #Back #Chest #Oedema #Extremeties #General appearance #Head, Eyes, ENT #Heart #MSK #Neck #Other #Peripheral vascular #Skin and Appendages 
+
+Physical examination 
+"PXGENAPP", "PXHEADEY", "PXNECK", "PXCHEST", "PXHEART", "PXABDOM", "PXEXTREM",
+"PXEDEMA", "PXPERIPH", "PXSKIN", "PXMUSCUL", "PXBACK", "PXOTHER",
+
+
+
+
+
+#file name adni_sc
+Neurological examination 
+# Variables to sum
+neurological_vars = [
+    "NXVISUAL", "NXAUDITO", "NXTREMOR", "NXCONSCI", "NXNERVE",
+    "NXMOTOR", "NXFINGER", "NXHEEL", "NXSENSOR", "NXTENDON",
+    "NXPLANTA", "NXGAIT", "NXOTHER"
+]
+
+# Open the file
+with open('adni_sc.csv', 'r') as file:
+    reader = csv.DictReader(file)
+
+    # Loop through each individual's row
+    for row in reader:
+        participant_id = row.get("RID") or row.get("ID") or "Unknown"  # Adjust if there's a unique ID column
+
+        # Sum only neurological variables, handling missing/empty values safely
+        total_score = sum(
+            int(row[var]) if row[var].isdigit() else 0 for var in neurological_vars
+        )
+
+        print(f"Participant {participant_id} - Total Neurological Score: {total_score}")
+
+
+
+
+
 
 
 df = pd.read_csv("adni_physical_examination_domains") 
@@ -330,3 +367,11 @@ df.tail()        # Last 5 rows
 df.sample(5)     # Random 5 rows
 
 
+
+
+25/04/2025
+Writing code for NE and PE scores
+Writing code for histograms for numeric clinical variables
+Writing code for outlier detection for numeric variables
+Writing code for merging the screening and baseline data
+Writing code for calculating screening age and time between SC and BL
