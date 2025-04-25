@@ -232,6 +232,11 @@ adni_bl_demo_diag_v2.describe()
 #baseline data: adni_bl_demo_diag_v2
 #merging variable: RID
 #Guide to merging in PANDAS: https://pandas.pydata.org/docs/user_guide/merging.html 
+#code from Sara below:
+
+merged_on_proteomics_inner = pd.merge(proteomics, metabolomics_data_1, on='eid', how='inner')
+participants_after_proteomics_inner_join = merged_on_proteomics_inner['eid'].nunique()
+
 
 
 ##DORAE TO WRITE CODE FOR CALCULATING SCREENING AGE AND TIME FROM SC TO BL VISIT. WILL NEED TO WRITE CODE RENAMING THE 2 VISDATE/EXAMDATE VARIABLES***************************************************************************************************************************************************
