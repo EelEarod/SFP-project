@@ -225,12 +225,30 @@ adni_bl_demo_diag_v2.describe()
 
 
 
+# In[5]:
+
+##DORAE TO WRITE CODE TO MERGE SCREENING AND DEMO/DIAGNOSTIC DATAFRAMES BASED ON RID***************************************************************************************************************************************************
+#screening data: adni_sc_clin_v2
+#baseline data: adni_bl_demo_diag_v2
+#merging variable: RID
+#Guide to merging in PANDAS: https://pandas.pydata.org/docs/user_guide/merging.html 
 
 
+##DORAE TO WRITE CODE FOR CALCULATING SCREENING AGE AND TIME FROM SC TO BL VISIT. WILL NEED TO WRITE CODE RENAMING THE 2 VISDATE/EXAMDATE VARIABLES***************************************************************************************************************************************************
+##EXAMPLE CODE PROVIDED BY LAUREN BELOW
 
-
-
-
+ ## Convert dates to datetime format
+  combined_df['EXAMDATE_BL'] = pd.to_datetime(combined_df['EXAMDATE_BL'])
+  combined_df['EXAMDATE_SC'] = pd.to_datetime(combined_df['EXAMDATE_SC'])
+  
+  # Calculate how much time has passed (in years)
+  combined_df['AGE_DIFF_YEARS'] = (combined_df['EXAMDATE_SC'] - combined_df['EXAMDATE_BL']).dt.days / 365.25
+  
+  # Calculate age at screening
+  combined_df['AGE_SC'] = combined_df['AGE'] + combined_df['AGE_DIFF_YEARS']
+  
+  # Age squared
+  combined_df['AGE_SC_SQ'] = combined_df['AGE_SC'] ** 2
 
 
 
