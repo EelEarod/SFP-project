@@ -393,6 +393,7 @@ participants_after_proteomics_inner_join = merged_on_proteomics_inner['eid'].nun
 
 
 
+
 ##DORAE TO WRITE CODE FOR CALCULATING SCREENING AGE AND TIME FROM SC TO BL VISIT. WILL NEED TO WRITE CODE RENAMING THE 2 VISDATE/EXAMDATE VARIABLES***************************************************************************************************************************************************
 ##EXAMPLE CODE PROVIDED BY LAUREN BELOW
 
@@ -486,10 +487,3 @@ df.sample(5)     # Random 5 rows
 
 
 
-
-25/04/2025
-Writing code for NE and PE scores
-Writing code for histograms for numeric clinical variables
-Writing code for outlier detection for numeric variables
-Writing code for merging the screening and baseline data
-Writing code for calculating screening age and time between SC and BL
