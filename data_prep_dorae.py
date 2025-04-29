@@ -389,6 +389,8 @@ adni_bl_demo_diag_v2.describe()
 merged_on_proteomics_inner = pd.merge(proteomics, metabolomics_data_1, on='eid', how='inner')
 participants_after_proteomics_inner_join = merged_on_proteomics_inner['eid'].nunique()
 
+###two different datasets for SC and BL, both have RID - need to merge data sets together based on RIS
+###if SC and BL data on same spreadsheet then this may not be required 
 
 
 
@@ -410,6 +412,11 @@ participants_after_proteomics_inner_join = merged_on_proteomics_inner['eid'].nun
   # Age squared
   combined_df['AGE_SC_SQ'] = combined_df['AGE_SC'] ** 2
 
+
+VISDATE NE, PE, Vitals
+print dates to visualise dates 
+if all the same, then report that date
+if different dates - will have to decide what age to use 
 
 
 
