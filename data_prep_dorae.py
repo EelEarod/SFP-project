@@ -61,6 +61,13 @@ adni_sc_clin = adni_sc[["RID", "VISCODE2", "VISDATE",
                         "NXVISUAL", "NXAUDITO", "NXTREMOR", "NXCONSCI", "NXNERVE", "NXMOTOR", "NXFINGER", "NXHEEL", "NXSENSOR", "NXTENDON", "NXPLANTA", "NXGAIT", "NXOTHER",
                         "VSWEIGHT", "VSWTUNIT", "VSHEIGHT", "VSHTUNIT", "VSBPSYS", "VSBPDIA", "VSPULSE", "VSRESP", "VSTEMP", "VSTMPSRC", "VSTMPUNT"]]
 
+##change variables to match Sheena's data dictionary 
+adni_sc_clin = adni_sc[["RID", "VISCODE2", "VISDATE", 
+                        "PXGENAPP_PHYSICAL", "PXHEADEY_PHYSICAL", "PXNECK_PHYSICAL", "PXCHEST_PHYSICAL", "PXHEART_PHYSICAL", "PXABDOM_PHYSICAL", "PXEXTREM_PHYSICAL", "PXEDEMA_PHYSICAL", "PXPERIPH_PHYSICAL", "PXSKIN_PHYSICAL", "PXMUSCUL_PHYSICAL", "PXBACK_PHYSICAL", "PXOTHER_PHYSICAL",
+                        "NXVISUAL_NEUROEXM", "NXAUDITO_NEUROEXM", "NXTREMOR_NEUROEXM", "NXCONSCI_NEUROEXM", "NXNERVE_NEUROEXM", "NXMOTOR_NEUROEXM", "NXFINGER_NEUROEXM", "NXHEEL_NEUROEXM", "NXSENSOR_NEUROEXM", "NXTENDON_NEUROEXM", "NXPLANTA_NEUROEXM", "NXGAIT_NEUROEXM", "NXOTHER_NEUROEXM",
+                        "VSWEIGHT_VITALS", "VSWTUNIT_VITALS", "VSHEIGHT_VITALS", "VSHTUNIT_VITALS", "VSBPSYS_VITALS", "VSBPDIA_VITALS", "VSPULSE_VITALS", "VSRESP_VITALS", "VSTEMP_VITALS", "VSTMPSRC_VITALS", "VSTMPUNT_VITALS"]]
+
+
 # Fix values coded incorrectly as -4 oe -1 (missing data)
 adni_sc_clin[col] = adni_sc_clin[col].replace(-4,-1, np.nan) #this was based on manual inspection of the data values in excel. May need to justify in Python/Jupyter later.
 
@@ -70,13 +77,27 @@ categorical_vars = [
                         "NXVISUAL", "NXAUDITO", "NXTREMOR", "NXCONSCI", "NXNERVE", "NXMOTOR", "NXFINGER", "NXHEEL", "NXSENSOR", "NXTENDON", "NXPLANTA", "NXGAIT", "NXOTHER",
                         "VSWTUNIT", "VSHTUNIT", "VSTMPSRC", "VSTMPUNT"]]
 
+##change variables to match Sheena's data dictionary 
+categorical_vars = [
+      "PXGENAPP_PHYSICAL", "PXHEADEY_PHYSICAL", "PXNECK_PHYSICAL", "PXCHEST_PHYSICAL", "PXHEART_PHYSICAL", "PXABDOM_PHYSICAL", "PXEXTREM_PHYSICAL", "PXEDEMA_PHYSICAL", "PXPERIPH_PHYSICAL", "PXSKIN_PHYSICAL", "PXMUSCUL_PHYSICAL", "PXBACK_PHYSICAL", "PXOTHER_PHYSICAL",
+                        "NXVISUAL_NEUROEXM", "NXAUDITO_NEUROEXM", "NXTREMOR_NEUROEXM", "NXCONSCI_NEUROEXM", "NXNERVE_NEUROEXM", "NXMOTOR_NEUROEXM", "NXFINGER_NEUROEXM", "NXHEEL_NEUROEXM", "NXSENSOR_NEUROEXM", "NXTENDON_NEUROEXM", "NXPLANTA_NEUROEXM", "NXGAIT_NEUROEXM", "NXOTHER_NEUROEXM",
+                        "VSWEIGHT_VITALS", "VSWTUNIT_VITALS", "VSHEIGHT_VITALS", "VSHTUNIT_VITALS", "VSBPSYS_VITALS", "VSBPDIA_VITALS", "VSPULSE_VITALS", "VSRESP_VITALS", "VSTEMP_VITALS", "VSTMPSRC_VITALS", "VSTMPUNT_VITALS"]]
+
+
 for col in categorical_vars:
       adni_sc_clin_v2[col] = adni_sc_clin_v2[col].astype('category')
+
 
 # Make sure numeric values are treated as numbers
   numeric_vars = ["VSWEIGHT", "VSHEIGHT", "VSBPSYS", "VSBPDIA", "VSPULSE", "VSRESP", "VSTEMP"]
   for col in numeric_vars:
       adni_sc_clin_v2[col] = pd.to_numeric(adni_sc_clin_v2[col], errors='coerce')
+
+##change variables to match Sheena's data dictionary 
+numeric_vars = ["VSWEIGHT_VITALS", "VSHEIGHT_VITALS", "VSBPSYS_VITALS", "VSBPDIA_VITALS", "VSPULSE_VITALS", "VSRESP_VITALS", "VSTEMP_VITALS"]
+  for col in numeric_vars:
+      adni_sc_clin_v2[col] = pd.to_numeric(adni_sc_clin_v2[col], errors='coerce')
+
 
 # Descriptive stats
 adni_sc_clin_v2.describe()
@@ -100,8 +121,18 @@ def inches_to_cm(inches):
 adni_sc_clin_v2['VSWEIGHT'] = adni_sc_clin_v2.apply(lambda row: pounds_to_kg(row['VSWEIGHT']) if row['VSWTUNIT'] == 1 else row['VSWEIGHT'], axis=1)
 adni_sc_clin_v2['VSHEIGHT'] = adni_sc_clin_v2.apply(lambda row: inches_to_cm(row['VSHEIGHT']) if row['VSHTUNIT'] == 1 else row['VSHEIGHT'], axis=1)
 
+##change variables to match Sheena's data dictionary 
+adni_sc_clin_v2['VSWEIGHT_VITALS'] = adni_sc_clin_v2.apply(lambda row: pounds_to_kg(row['VSWEIGHT_VITALS']) if row['VSWTUNIT_VITALS'] == 1 else row['VSWEIGHT_VITALS'], axis=1)
+adni_sc_clin_v2['VSHEIGHT_VITALS'] = adni_sc_clin_v2.apply(lambda row: inches_to_cm(row['VSHEIGHT_VITALS']) if row['VSHTUNIT_VITALS'] == 1 else row['VSHEIGHT_VITALS'], axis=1)
+
+
+
 #calculate BMI
 BMI = adni_sc_clin_v2['VSWEIGHT'] / (adni_sc_clin_v2['VSHEIGHT']/100)**2 
+
+##change variables to match Sheena's data dictionary 
+BMI = adni_sc_clin_v2['VSWEIGHT_VITALS'] / (adni_sc_clin_v2['VSHEIGHT_VITALS']/100)**2 
+
 
 #Create BMI category and name. LAUREN TO DOUBLECHECK THIS CODE.
 adni_sc_clin_v2['BMI_CATEGORY']= if bmi<18.5:
@@ -118,6 +149,9 @@ adni_sc_clin_v2['BMI_CATEGORY'] = adni_sc_clin_v2['BMI_CATEGORY'].astype('catego
 #Calculate MAP. LAUREN TO DOUBLECHECK THIS CODE.
 MAP = (adni_sc_clin_v2['VSBPSYS'] + 2(adni_sc_clin_v2['VSBPDIA']))/3
 
+##change variables to match Sheena's data dictionary 
+MAP = (adni_sc_clin_v2['VSBPSYS_VITALS'] + 2(adni_sc_clin_v2['VSBPDIA_VITALS']))/3
+
 #Convert all temperature unit from farenheit to celsius. LAUREN TO DOUBLECHECK THIS CODE. 
 
 def fahrenheit_to_celsius(fahrenheit):
@@ -125,6 +159,9 @@ def fahrenheit_to_celsius(fahrenheit):
     return celsius
 
 adni_sc_clin_v2['VSTEMP'] = adni_sc_clin_v2.apply(lambda row: fahrenheit_to_celsius(row['VSTEMP']) if row['VSTMPUNT'] == 1 else row['VSTEMP'], axis=1)
+
+##change variables to match Sheena's data dictionary 
+adni_sc_clin_v2['VSTEMP_VITALS'] = adni_sc_clin_v2.apply(lambda row: fahrenheit_to_celsius(row['VSTEMP_VITALS']) if row['VSTMPUNT_VITALS'] == 1 else row['VSTEMP_VITALS'], axis=1)
 
 
 
@@ -137,6 +174,10 @@ Physical examination variables (1= normal, 2=abnormal)
 Neurological examination variables (1= normal, 2=abnormal)
 "NXVISUAL", "NXAUDITO", "NXTREMOR", "NXCONSCI", "NXNERVE",
 "NXMOTOR", "NXFINGER", "NXHEEL", "NXSENSOR", "NXTENDON", "NXPLANTA", "NXGAIT", "NXOTHER"
+
+##change variables to match Sheena's data dictionary 
+"NXVISUAL_NEUROEXM","NXAUDITO_NEUROEXM","NXTREMOR_NEUROEXM","NXCONSCI_NEUROEXM","NXNERVE_NEUROEXM","NXMOTOR_NEUROEXM",
+"NXFINGER_NEUROEXM","NXHEEL_NEUROEXM","NXSENSOR_NEUROEXM","NXTENDON_NEUROEXM","NXPLANTA_NEUROEXM","NXGAIT_NEUROEXM","NXOTHER_NEUROEXM"
 
 #file name adni_sc
 Neurological examination 
@@ -169,6 +210,20 @@ Physical examination
 
 "PXGENAPP", "PXHEADEY", "PXNECK", "PXCHEST", "PXHEART", "PXABDOM", "PXEXTREM",
 "PXEDEMA", "PXPERIPH", "PXSKIN", "PXMUSCUL", "PXBACK", "PXOTHER",
+
+PXGENAPP_PHYSICAL
+PXHEADEY_PHYSICAL
+PXNECK_PHYSICAL
+PXCHEST_PHYSICAL
+PXHEART_PHYSICAL
+PXABDOM_PHYSICAL
+PXEXTREM_PHYSICAL
+PXEDEMA_PHYSICAL
+PXPERIPH_PHYSICAL
+PXSKIN_PHYSICAL
+PXMUSCUL_PHYSICAL
+PXBACK_PHYSICAL
+PXOTHER_PHYSICAL
 
 #file name adni_sc
 Physical examination 
@@ -209,13 +264,24 @@ df = pd.read_csv("adni_neurological_examination_domains") #change file name
 total_score = df['normal/abnormal'].sum()
 print("Total Score:", total_score)
 
-
 ///////////
 
 ##DORAE TO CREATE HISTOGRAMS FOR ALL NUMERIC CLINICAL VARIABLES***************************************************************************************************************************************************
 
 Numeric Clinical Variables
 "VSWEIGHT", "VSWTUNIT", "VSHEIGHT", "VSHTUNIT", "VSBPSYS", "VSBPDIA", "VSPULSE", "VSRESP", "VSTEMP", "VSTMPSRC", "VSTMPUNT"
+
+VSWEIGHT_VITALS
+VSWTUNIT_VITALS
+VSHEIGHT_VITALS
+VSHTUNIT_VITALS
+VSBPSYS_VITALS
+VSBPDIA_VITALS
+VSPULSE_VITALS
+VSRESP_VITALS
+VSTEMP_VITALS
+VSTMPSRC_VITALS
+VSTMPUNT_VITALS
 
 ##EXAMPLE PROVIDED BY LAUREN BELOW. PLEASE REPEAT FOR ALL NUMERIC CLINICAL VARIABLES
 
