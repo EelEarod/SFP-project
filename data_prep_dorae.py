@@ -188,6 +188,12 @@ neurological_vars = [
     "NXPLANTA", "NXGAIT", "NXOTHER"
 ]
 
+#change variables to match Sheena's data dictionary
+neurological_vars = [
+    "NXVISUAL_NEUROEXM","NXAUDITO_NEUROEXM","NXTREMOR_NEUROEXM","NXCONSCI_NEUROEXM","NXNERVE_NEUROEXM","NXMOTOR_NEUROEXM",
+    "NXFINGER_NEUROEXM","NXHEEL_NEUROEXM","NXSENSOR_NEUROEXM","NXTENDON_NEUROEXM","NXPLANTA_NEUROEXM","NXGAIT_NEUROEXM","NXOTHER_NEUROEXM"
+]
+
 # Open the file
 with open('adni_sc.csv', 'r') as file:
     reader = csv.DictReader(file)
@@ -232,6 +238,14 @@ physical_vars = [
     "PXGENAPP", "PXHEADEY", "PXNECK", "PXCHEST", 
     "PXHEART", "PXABDOM", "PXEXTREM", "PXEDEMA", 
     "PXPERIPH", "PXSKIN", "PXMUSCUL", "PXBACK", "PXOTHER"
+]
+
+##change variables to match Sheena's data dictionary
+physical_vars = [
+    "PXGENAPP_PHYSICAL","PXHEADEY_PHYSICAL","PXNECK_PHYSICAL","PXCHEST_PHYSICAL",
+    "PXHEART_PHYSICAL","PXABDOM_PHYSICAL","PXEXTREM_PHYSICAL","PXEDEMA_PHYSICAL",
+    "PXPERIPH_PHYSICAL","PXSKIN_PHYSICAL","PXMUSCUL_PHYSICAL","PXBACK_PHYSICAL",
+    "PXOTHER_PHYSICALPXGENAPP"
 ]
 
 # Open the file
